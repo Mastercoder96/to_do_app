@@ -1,20 +1,38 @@
-const addTaskBtn = document.querySelector("#addTaskButton");
+function addTask() {
+    const taskInput = document.getElementById('taskInput');
+    const taskText = taskInput.value.trim();
 
-const removeElement = (event) => {
-  const li = event.target.parentElement;
+    if (taskText === "") {
+        alert("Please enter a task!");
+        return;
+    }
 
-  const tasklistNode = document.querySelector("#taskList");
+    const taskList = document.getElementById('taskList');
+    const taskItem = document.createElement('li');
 
-  tasklistNode.removeChild(li)
-};
+    const taskSpan = document.createElement('span');
+    taskSpan.textContent = taskText;
+    taskSpan.onclick = () => toggleTask(taskSpan);
 
-addTaskBtn.addEventListener("click", () => {
-  const input = document.querySelector("#taskInput");
-  const tasklist = document.querySelector("#taskList");
+    const deleteBtn = document.createElement('bttn');
+    deleteBtn.textContent = 'x';
+    deleteBtn.onclick = () => deleteTask(taskItem);
 
-  const li = document.createElement("li")
-  li.innerHTML = `<span>- ${input.value}</span> <span onclick="removeElement(event)">X</span>`
+    taskItem.appendChild(taskSpan);
+    taskItem.appendChild(deleteBtn);
+    taskList.appendChild(taskItem);
 
-  tasklist.appendChild(li);
-  input.value = "";
-});
+
+    taskInput.value = '';
+
+}
+
+
+function toggleTask(taskSpan) {
+    taskSpan.classList.toggle('completed');
+
+}
+
+function deleteTask(taskItem) {
+    taskItem.remove();
+}
